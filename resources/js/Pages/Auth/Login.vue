@@ -32,58 +32,112 @@ const submit = () => {
 <template>
     <Head title="Log in" />
 
-    <JetAuthenticationCard>
-        <template #logo>
-            <JetAuthenticationCardLogo />
-        </template>
 
-        <JetValidationErrors class="mb-4" />
+  <div class="grid grid-cols-6 lg:grid-cols-12 min-h-screen max-w-7xl mx-auto">
 
-        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
-            {{ status }}
+
+    <form class=" col-span-full lg:col-span-5 px-4 py-2  lg:px-2  flex flex-col justify-center" @submit.prevent="submit">
+
+      <JetValidationErrors class=""/>
+
+      <h2 class="text-xl md:text-4xl my-5">
+        Welcome Back
+      </h2>
+
+
+      <hr class="">
+      <section class="grid  grid-cols-12 gap-4 my-5 ">
+
+
+
+        <div class="col-span-full ">
+          <JetLabel for="email" class="sr-only" value="Email"/>
+          <JetInput
+              id="email"
+              v-model="form.email"
+              type="email"
+              class="mt-1 block w-full"
+              placeholder="Email"
+
+              required
+          />
         </div>
 
-        <form @submit.prevent="submit">
-            <div>
-                <JetLabel for="email" value="Email" />
-                <JetInput
-                    id="email"
-                    v-model="form.email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    required
-                    autofocus
-                />
-            </div>
+        <div class="col-span-full ">
+          <JetLabel for="password" class="sr-only" value="Password"/>
+          <JetInput
+              id="password"
+              v-model="form.password"
+              type="password"
+              class="mt-1 block w-full"
+              required
+              placeholder="Password"
+              autocomplete="new-password"
+          />
+        </div>
 
-            <div class="mt-4">
-                <JetLabel for="password" value="Password" />
-                <JetInput
-                    id="password"
-                    v-model="form.password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    required
-                    autocomplete="current-password"
-                />
-            </div>
+        <div v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature" class="mt-4">
+          <JetLabel for="terms">
+            <div class="flex items-center">
+              <JetCheckbox id="terms" v-model:checked="form.terms" name="terms"/>
 
-            <div class="block mt-4">
-                <label class="flex items-center">
-                    <JetCheckbox v-model:checked="form.remember" name="remember" />
-                    <span class="ml-2 text-sm text-gray-600">Remember me</span>
-                </label>
+              <div class="ml-2">
+                I agree to the <a target="_blank" :href="route('terms.show')"
+                                  class="underline text-sm text-gray-600 hover:text-gray-900">Terms of Service</a> and
+                <a
+                    target="_blank" :href="route('policy.show')"
+                    class="underline text-sm text-gray-600 hover:text-gray-900">Privacy
+                  Policy</a>
+              </div>
             </div>
+          </JetLabel>
+        </div>
 
-            <div class="flex items-center justify-end mt-4">
-                <Link v-if="canResetPassword" :href="route('password.request')" class="underline text-sm text-gray-600 hover:text-gray-900">
-                    Forgot your password?
-                </Link>
+        <div class="col-span-12 flex items-center justify-end mt-4">
 
-                <JetButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Log in
-                </JetButton>
-            </div>
-        </form>
-    </JetAuthenticationCard>
+          <button class="bg-red-300 w-full rounded-lg p-2 font-bold" :class="{ 'opacity-25': form.processing }"
+                  :disabled="form.processing">
+            Login
+          </button>
+        </div>
+
+        <div class="col-span-full  flex items-center  ">
+          <span class="text-gray-400">Don't have an account? </span>
+          <Link :href="route('register')" class="underline  hover:text-gray-900">
+            Register
+          </Link>
+
+        </div>
+        <div class="col-span-full  flex items-center  ">
+          <span class="text-gray-400">Forgot Password? </span>
+          <Link :href="route('password.request')" class="underline  hover:text-gray-900">
+            Reset Password
+          </Link>
+
+        </div>
+
+      </section>
+
+    </form>
+
+    <div class="col-span-full md:col-span-7   flex p-5">
+
+      <div class=" w-full flex flex-col md:flex-row space-x-5  items-center relative">
+
+        <div class="absolute h-full w-10/12 right-0 bg-gray-100 rounded-lg"/>
+
+        <div class="h-full  relative">
+          <img src="/storage/images/back-8.jpeg" class="rounded-lg" alt="Lady On Swing">
+        </div>
+
+        <div class="flex flex-col space-y-5  relative">
+          <img class="w-[500px] rounded-lg" src="/storage/images/back-7.png" alt="Lady On Swing">
+          <img class="w-[500px] rounded-lg" src="/storage/images/back-6.jpeg" alt="Lady On Swing">
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
 </template>
