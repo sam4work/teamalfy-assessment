@@ -1,8 +1,5 @@
 <script setup>
 import {Head, Link, useForm} from '@inertiajs/inertia-vue3';
-import JetAuthenticationCard from '@/Components/AuthenticationCard.vue';
-import JetAuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
-import JetButton from '@/Components/Button.vue';
 import JetInput from '@/Components/Input.vue';
 import JetCheckbox from '@/Components/Checkbox.vue';
 import JetLabel from '@/Components/Label.vue';
@@ -25,15 +22,16 @@ const handleFileInputChange = () => {
 
 
 const form = useForm({
+  photo: null,
   name: '',
-  nationality: '',
   username: '',
   dob: '',
-  phoneNumber: '',
-  photo: null,
+  nationality: '',
   email: '',
+  phoneNumber: '',
   password: '',
   password_confirmation: '',
+  bio: '',
   terms: false,
 });
 
@@ -77,7 +75,8 @@ const submit = () => {
             <p>Add your photo</p>
             <p>support formats: jpg, jpeg, png</p>
             <p>
-              <label for="photo" class="flex items-center space-x-2 block" @click="openFileInput">
+              <label for="photo" class="flex items-center space-x-2 block hover:text-gray-300 cursor-pointer"
+                     @click="openFileInput">
 
                 <svg class="h-3 w-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                   <path
@@ -106,7 +105,7 @@ const submit = () => {
               v-model="form.name"
               type="text"
               class="mt-1 block w-full"
-              required
+
               autofocus
               placeholder="Full name"
               autocomplete="name"
@@ -119,7 +118,6 @@ const submit = () => {
               v-model="form.username"
               type="text"
               class="mt-1 block w-full"
-              required
               autofocus
               placeholder="User name"
               autocomplete="username"
@@ -136,19 +134,19 @@ const submit = () => {
                       auto-apply
                       :enableTimePicker="false"
                       v-model="form.dob"
-                      placeholder="DOB" textInput required
+                      placeholder="DOB" textInput
           />
 
         </div>
 
-<!--        Nationality-->
+        <!--        Nationality-->
         <div class="col-span-full lg:col-span-6">
           <JetLabel for="nationality" class="sr-only" value="Nationality"/>
           <select
               id="nationality"
               v-model="form.nationality"
               class="border-gray-300 text-gray-500 w-full mt-1 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-              required
+
           >
             <option disabled value="">Nationality</option>
             <option value="ghana">Ghana</option>
@@ -160,7 +158,7 @@ const submit = () => {
           </select>
         </div>
 
-<!--        Email-->
+        <!--        Email-->
         <div class="col-span-full lg:col-span-6">
           <JetLabel for="email" class="sr-only" value="Email"/>
           <JetInput
@@ -170,10 +168,11 @@ const submit = () => {
               class="mt-1 block w-full"
               placeholder="Email"
 
-              required
+
           />
         </div>
 
+<!--        Phone Number-->
         <div class="col-span-full lg:col-span-6">
           <JetLabel for="phone-number" class="sr-only" value="phone number"/>
 
@@ -183,12 +182,13 @@ const submit = () => {
               v-model="form.phoneNumber"
               type="text"
               class="mt-1 block w-full"
-              required
+
               placeholder="Phone Number"
               autocomplete="phone-number"
           />
         </div>
 
+<!--        Password-->
         <div class="col-span-full lg:col-span-6">
           <JetLabel for="password" class="sr-only" value="Password"/>
           <JetInput
@@ -196,11 +196,13 @@ const submit = () => {
               v-model="form.password"
               type="password"
               class="mt-1 block w-full"
-              required
+
               placeholder="Password"
               autocomplete="new-password"
           />
         </div>
+
+<!--        Password Confirmation-->
         <div class="col-span-full lg:col-span-6">
           <JetLabel for="password_confirmation" class="sr-only" value="Password"/>
           <JetInput
@@ -208,7 +210,7 @@ const submit = () => {
               v-model="form.password_confirmation"
               type="password"
               class="mt-1 block w-full"
-              required
+
               placeholder="Confirm Password"
               autocomplete="password_confirmation"
           />
@@ -231,18 +233,17 @@ const submit = () => {
           </JetLabel>
         </div>
 
+<!--        Bio-->
         <div class="col-span-12">
           <JetLabel for="bio" class="sr-only" value="Bio"/>
           <textarea
               id="bio"
               v-model="form.bio"
               class="mt-1 block w-full rounded border-gray-300"
-              placeholder="Bio"
+              placeholder="Bio (optional)"
               rows="5"
-
-              required
           ></textarea>
-          <p class="text-right">200</p>
+          <p :class="[  (200 - form.bio?.length) < 0 ? 'text-red-500' : '' ]" class="text-right">{{ 200 - form.bio?.length }}</p>
         </div>
 
         <div class="col-span-12 flex items-center justify-end mt-4">

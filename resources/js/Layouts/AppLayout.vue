@@ -26,6 +26,7 @@ const switchToTeam = (team) => {
 const logout = () => {
     Inertia.post(route('logout'));
 };
+
 </script>
 
 <template>
