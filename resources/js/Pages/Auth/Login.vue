@@ -53,11 +53,11 @@ const submit = () => {
         <div class="col-span-full ">
           <JetLabel for="email" class="sr-only" value="Email"/>
           <JetInput
-              id="email"
+              id="-username"
               v-model="form.email"
-              type="email"
+              type="text"
               class="mt-1 block w-full"
-              placeholder="Email"
+              placeholder="Email/ Username"
 
               required
           />
